@@ -25,9 +25,10 @@ function M.start()
 		client_id = M.external_client()
 	end
 
+    -- todo: root_dir config option
 	if not client_id then
 		client_id = vim.lsp.start_client({
-			cmd = { "sov", "lsp" },
+			cmd = { "sov_lsp" },
 			name = "sov",
             root_dir = "/home/silent/quark/",
 		})
