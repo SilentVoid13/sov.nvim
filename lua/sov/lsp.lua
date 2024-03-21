@@ -20,26 +20,26 @@ function M.external_client()
 end
 
 ---Starts an LSP client if necessary
-function M.start()
+function M.start(config)
 	if not client_id then
 		client_id = M.external_client()
 	end
 
-    -- todo: root_dir config option
+	-- todo: root_dir config option
 	if not client_id then
 		client_id = vim.lsp.start_client({
 			cmd = { "sov_lsp" },
 			name = "sov",
-            root_dir = "/home/silent/quark/",
+			root_dir = config.root_dir,
 		})
 	end
 end
 
 ---Starts an LSP client if necessary, and attaches the given buffer.
 ---@param bufnr number
-function M.buf_add(bufnr)
+function M.buf_add(config, bufnr)
 	bufnr = bufnr or 0
-	M.start()
+	M.start(config)
 	vim.lsp.buf_attach_client(bufnr, client_id)
 end
 
