@@ -57,4 +57,13 @@ function M.client()
 	return vim.lsp.get_client_by_id(client_id)
 end
 
+function M.execute_command(cmd, args, cb)
+	local bufnr = 0
+	M.start()
+	M.client().request("workspace/executeCommand", {
+		command = "sov." .. cmd,
+		arguments = args,
+	}, cb, bufnr)
+end
+
 return M
