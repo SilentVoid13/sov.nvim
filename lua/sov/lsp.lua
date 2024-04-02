@@ -1,3 +1,4 @@
+local async = require("plenary.async")
 local client_id = nil
 
 local M = {}
@@ -57,13 +58,22 @@ function M.client()
 	return vim.lsp.get_client_by_id(client_id)
 end
 
-function M.execute_command(cmd, args, cb)
+M.execute_command = function(cmd, args, cb)
 	local bufnr = 0
 	M.start()
 	M.client().request("workspace/executeCommand", {
 		command = "sov." .. cmd,
 		arguments = args,
 	}, cb, bufnr)
+end
+
+M.execute_sync_command = function(cmd, args)
+	local bufnr = 0
+	M.start()
+	return M.client().request_sync("workspace/executeCommand", {
+		command = "sov." .. cmd,
+		arguments = args,
+	}, 500, bufnr)
 end
 
 return M
