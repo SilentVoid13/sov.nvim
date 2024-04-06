@@ -1,6 +1,6 @@
 # sov.nvim
 
-sov.nvim is an implementation of the [sov](https://github.com/SilentVoid13/sov) LSP for Neovim.
+sov.nvim is an integration of the [sov](https://github.com/SilentVoid13/sov) Language Server for Neovim.
 
 ## Usage
 
@@ -10,7 +10,7 @@ require("sov").setup({
 })
 ```
 
-sov.nvim will automatically start the sov LSP on markdown files opening.
+sov.nvim will automatically start the [sov](https://github.com/SilentVoid13/sov) Language Server on markdown files opening.
 
 ## Commands
 
