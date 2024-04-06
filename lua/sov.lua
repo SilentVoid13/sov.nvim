@@ -29,7 +29,6 @@ end
 
 M.setup_lsp = function()
 	local trigger = "FileType " .. "markdown"
-    M.lsp_buf_auto_add(0)
     vim.api.nvim_command(string.format("autocmd %s lua require'sov'.lsp_buf_auto_add(0)", trigger))
 end
 
