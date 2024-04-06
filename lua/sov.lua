@@ -8,7 +8,7 @@ local commands = require("sov.commands")
 table.unpack = table.unpack or unpack -- 5.1 compatibility
 
 M.config = {
-    root_dir = "/home/notes",
+    root_dir = "",
 }
 
 M.setup = function(opts)
@@ -56,8 +56,9 @@ M.script_insert = function(script_name, rem_args)
     local args = { script_name, table.unpack(rem_args) }
     lsp.execute_command("script.run", args, function(err, content)
         assert(not err, tostring(err))
+        local lines = vim.split(content, "\n")
         -- insert content at cursor
-        vim.api.nvim_put({content}, "l", true, true)
+        vim.api.nvim_put(lines, "l", true, true)
     end)
 end
 
