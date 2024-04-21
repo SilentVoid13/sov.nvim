@@ -26,7 +26,6 @@ function M.start(config)
 		client_id = M.external_client()
 	end
 
-	-- todo: root_dir config option
 	if not client_id then
 		client_id = vim.lsp.start_client({
 			cmd = { "sov_lsp" },
@@ -58,18 +57,19 @@ function M.client()
 	return vim.lsp.get_client_by_id(client_id)
 end
 
-M.execute_command = function(cmd, args, cb)
+M.execute_command = function(config, cmd, args, cb)
 	local bufnr = 0
-	M.start()
+	M.start(config)
 	M.client().request("workspace/executeCommand", {
 		command = "sov." .. cmd,
 		arguments = args,
 	}, cb, bufnr)
 end
 
-M.execute_sync_command = function(cmd, args)
+M.execute_sync_command = function(config, cmd, args)
 	local bufnr = 0
-	M.start()
+	M.start(config)
+    print(client_id)
 	return M.client().request_sync("workspace/executeCommand", {
 		command = "sov." .. cmd,
 		arguments = args,
