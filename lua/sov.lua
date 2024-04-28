@@ -1,9 +1,8 @@
 local M = {}
 
-local async = require("plenary.async")
-local utils = require("sov.utils")
 local lsp = require("sov.lsp")
 local commands = require("sov.commands")
+local conceal = require("sov.conceal")
 
 table.unpack = table.unpack or unpack -- 5.1 compatibility
 
@@ -15,6 +14,7 @@ M.setup = function(opts)
 	opts = opts or {}
 	M.config = vim.tbl_extend("force", M.config, opts)
 	M.setup_lsp()
+	conceal.setup_conceal()
 
 	commands.add("SovIndex", M.index)
 	commands.add("SovDaily", M.daily)
@@ -31,9 +31,9 @@ M.setup_lsp = function()
 	local trigger = "FileType " .. "markdown"
 	vim.api.nvim_command(string.format("autocmd %s lua require'sov'.lsp_buf_auto_add(0)", trigger))
 
-    -- start the lsp server in the background to always be ready for commands
-    -- TODO: this is not the best, find a better way
-    lsp.start(M.config)
+	-- start the lsp server in the background to always be ready for commands
+	-- TODO: this is not the best, find a better way
+	lsp.start(M.config)
 end
 
 M.lsp_buf_auto_add = function(bufnr)
